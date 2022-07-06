@@ -1,0 +1,41 @@
+<form className="form" onSubmit={handleSubmit}>
+        <Stack direction="column" spacing={{ xs: 1, sm: 2, md: 4 }}>
+          {/* <Grid container alignContent="center" direction="column"> */}
+          {/* // <Grid.Container gap={2} justify="center"> */}
+          {/* <Grid item xs={5}> */}
+          <h2>Bienvenido a Manusa</h2>
+          {/* </Grid> */}
+
+          {/* <Grid md={12}>{isLoginLoading && <strong>Estamos buscando tu usuario</strong>}</Grid> */}
+
+          {!isLoginLoading && (
+            <>
+              {/* <Grid item xs={8}> */}
+              <Input
+                // clearable
+                // bordered
+                size="sm"
+                labelPlaceholder="Usuario"
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+              />
+              {/* </Grid> */}
+              {/* <Grid item xs={8}> */}
+              <Input
+                type="password"
+                size="sm"
+                labelPlaceholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+              {/* </Grid> */}
+              {/* <Grid item xs={8}> */}
+              <Button color={'gradient'}>Login</Button>
+              {/* </Grid> */}
+            </>
+          )}
+          {hasLoginError && <strong>No encontramos tu usuario! </strong>}
+          {/* </Grid.Container> */}
+          {/* </Grid> */}
+        </Stack>
+      </form>
