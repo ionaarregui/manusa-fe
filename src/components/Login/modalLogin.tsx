@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Modal, Input, Row, Checkbox, Button, Text, Loading } from '@nextui-org/react'
+import { Modal, Input, Row, Checkbox, Button, Text, Loading, Spacer } from '@nextui-org/react'
 import useUser from '../../hooks/useUser'
 
 export default function ModalLogin() {
@@ -11,7 +11,7 @@ export default function ModalLogin() {
   // const [, navigate] = useLocation()
   // const {isLoginLoading, hasLoginError, login, isLogged} = useUser()
   // const { isLoginLoading, hasLoginError, login } = useUser()
-  const { login, isLoginLoading } = useUser()
+  const { login, isLoginLoading, hasLoginError } = useUser()
 
   // useEffect(() => {
   //   if (isLogged) {
@@ -55,6 +55,7 @@ export default function ModalLogin() {
             bordered
             fullWidth
             aria-label="name"
+            status={hasLoginError ? 'error' : 'secondary'}
             color="secondary"
             size="lg"
             placeholder="Usuario MOGUL"
@@ -65,12 +66,20 @@ export default function ModalLogin() {
             bordered
             fullWidth
             aria-label="pass"
-            color="secondary"
+            status={hasLoginError ? 'error' : 'secondary'}
             size="lg"
             placeholder="Password"
             type="password"
             ref={passwordRef}
           />
+          {hasLoginError && (
+            <>
+              <Text small color="error" css={{ textAlign: 'center' }}>
+                Email y/o contraseña inválidos
+              </Text>
+              <Spacer y={1} />
+            </>
+          )}
           <Row justify="space-between">
             <Checkbox onChange={handleRecordar}>
               <Text size={14}>Recordarme!</Text>

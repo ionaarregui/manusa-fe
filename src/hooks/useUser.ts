@@ -1,40 +1,41 @@
-import {useCallback, useState} from 'react'
+import React, { useCallback, useState } from 'react'
 // import Context from 'context/UserContext'
 import loginService from '../services/login'
 // import addFavService from 'services/addFav'
 
-
 type Props = {
-  username: string,
+  username: string
   password: string
 }
 
-export default function useUser () {
+export default function useUser() {
   // const { jwt,  setJWT} = useContext(Context)
   const [state, setState] = useState({ loading: false, error: false })
 
-  const login = useCallback(({username, password}:Props) => {
-    setState({loading: true, error: false })
-    loginService({username, password})
-      .then(jwt => {
-        window.sessionStorage.setItem('jwt', jwt)
-        setState({loading: false, error: false })
+  const login = useCallback(({ username, password }: Props) => {
+    setState({ loading: true, error: false })
+    loginService({ username, password })
+      .then((res) => {
+        if (res.status === 'Ok') {
+          window.sessionStorage.setItem('user', res)
+          setState({ loading: false, error: false })
+        } else {
+          setState({ loading: false, error: true })
+        }
         // setJWT(jwt)
       })
-      .catch(err => {
-        window.sessionStorage.removeItem('jwt')
-        setState({loading: false, error: true })
+      .catch((err) => {
+        window.sessionStorage.removeItem('user')
+        setState({ loading: false, error: true })
         console.error(err)
       })
-  // }, [setJWT])
+    // }, [setJWT])
   }, [])
 
-
-
   const logout = useCallback(() => {
-    window.sessionStorage.removeItem('jwt')
+    window.sessionStorage.removeItem('user')
     // setJWT(null)
-  // }, [setJWT])
+    // }, [setJWT])
   }, [])
 
   return {
@@ -45,4 +46,4 @@ export default function useUser () {
     login,
     logout
   }
-} 
+}

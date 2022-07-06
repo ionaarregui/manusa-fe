@@ -12,16 +12,16 @@ export default function login({ username, password }: Props) {
     headers: {
       'Content-Type': 'application/json; charset=utf-8'
     },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ email: username, password })
   })
     .then((res) => {
       if (!res.ok) throw new Error('Response is NOT ok')
-      console.log('ACA NO')
+      console.log('res primer then', res)
       return res.json()
     })
     .then((res) => {
-      const { jwt } = res
-      console.log(res)
-      return jwt
+      // const { jwt } = res
+      console.log('res segundo then', res)
+      return res
     })
 }
