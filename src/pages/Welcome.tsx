@@ -31,7 +31,7 @@ export const Welcome = () => {
     <WrapperPage>
       <Text id="modal-title">
         Welcome to
-        <Text b>Manussa</Text>
+        <Text b>Manusa</Text>
       </Text>
     </WrapperPage>
   )
