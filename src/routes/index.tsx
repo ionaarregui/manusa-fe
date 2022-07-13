@@ -28,8 +28,7 @@ const PrivateRoute = (props: any) => {
         state: { from: location }
       }}
     />
-  )
-  
+  )  
 }
 
 const Routes = () => {
