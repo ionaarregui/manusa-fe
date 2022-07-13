@@ -29,6 +29,7 @@ const PrivateRoute = (props: any) => {
       }}
     />
   )
+  
 }
 
 const Routes = () => {
