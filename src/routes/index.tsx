@@ -36,9 +36,13 @@ const Routes = () => {
     <AuthProvider>
       <Switch>
         <Route path="/login" exact component={LoginPage} />
-        {routes.map((props) => (
-          <PrivateRoute {...props} key={props.path as string} />
-        ))}
+        {routes.map((props) =>
+          props.path === '/login' ? (
+            <Route path="/login" exact component={LoginPage} />
+          ) : (
+            <PrivateRoute {...props} key={props.path as string} />
+          )
+        )}
         <Route path="/" exact component={Welcome} />
         <Route path="*" exact component={() => <div> Página no encontrada </div>} />
       </Switch>
