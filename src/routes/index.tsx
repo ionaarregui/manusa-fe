@@ -35,12 +35,12 @@ const Routes = () => {
   return (
     <AuthProvider>
       <Switch>
-        {/* {routes.map((props) => (
+        <Route path="/login" exact component={LoginPage} />
+        {routes.map((props) => (
           <PrivateRoute {...props} key={props.path as string} />
-          ))} */}
-        <Route path="/login" component={LoginPage} />
-        <Route path="/" component={Welcome} />
-        <Route path="*" component={() => <div> Página no encontrada </div>} />
+        ))}
+        <Route path="/" exact component={Welcome} />
+        <Route path="*" exact component={() => <div> Página no encontrada </div>} />
       </Switch>
     </AuthProvider>
   )
