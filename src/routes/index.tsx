@@ -28,16 +28,16 @@ const PrivateRoute = (props: any) => {
         state: { from: location }
       }}
     />
-  )  
+  )
 }
 
 const Routes = () => {
   return (
     <AuthProvider>
       <Switch>
-        {routes.map((props) => (
+        {/* {routes.map((props) => (
           <PrivateRoute {...props} key={props.path as string} />
-          ))}
+          ))} */}
         <Route path="/login" component={LoginPage} />
         <Route path="/" component={Welcome} />
         <Route path="*" component={() => <div> Página no encontrada </div>} />
