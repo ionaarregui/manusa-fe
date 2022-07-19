@@ -30,15 +30,20 @@ const PrivateRoute = (props: any) => {
 
 const Routes = () => {
   return (
-    // <AuthProvider>
-    <Switch>
-      <Route path="/login" component={LoginPage} />
-      {routes.map((props) => (
-        <PrivateRoute {...props} key={props.path as string} />
-      ))}
-      <Route path="/" component={Welcome} />
-      <Route path="*" component={() => <div> Página no encontrada </div>} />
-    </Switch>
+    <AuthProvider>
+      <Switch>
+        <Route path="/login" exact component={LoginPage} />
+        {routes.map((props) =>
+          props.path === '/login' ? (
+            <Route path="/login" exact component={LoginPage} />
+          ) : (
+            <PrivateRoute {...props} key={props.path as string} />
+          )
+        )}
+        <Route path="/" exact component={Welcome} />
+        <Route path="*" exact component={() => <div> Página no encontrada </div>} />
+      </Switch>
+    </AuthProvider>
   )
 }
 
