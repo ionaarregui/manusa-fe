@@ -6,6 +6,7 @@ type Props = {
   password: string
 }
 
+/** ESTO NO SE USA */
 export default function login({ username, password }: Props) {
   return fetch(`${ENDPOINT}/login`, {
     method: 'POST',
@@ -16,11 +17,12 @@ export default function login({ username, password }: Props) {
   })
     .then((res) => {
       if (!res.ok) throw new Error('Response is NOT ok')
-      console.log('res primer then', res)
+      // console.log('res primer then', res)
       return res.json()
     })
     .then((res) => {
       // const { jwt } = res
+      // if(res.status === 'Ok')
       console.log('res segundo then', res)
       return res
     })

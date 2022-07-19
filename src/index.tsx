@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { createTheme, NextUIProvider } from '@nextui-org/react'
 import './index.css'
 import Routes from './routes'
+import { AuthProvider } from './contexts/UserContext'
 
 const darkTheme = createTheme({
   type: 'dark'
@@ -16,11 +17,13 @@ const darkTheme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <NextUIProvider theme={darkTheme}>
-        {/* <App /> */}
-        <Routes />
-      </NextUIProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <NextUIProvider theme={darkTheme}>
+          {/* <App /> */}
+          <Routes />
+        </NextUIProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 )

@@ -1,49 +1,43 @@
-import React, { useCallback, useState } from 'react'
-// import Context from 'context/UserContext'
-import loginService from '../services/login'
-// import addFavService from 'services/addFav'
+import React from 'react'
+import { useHistory } from 'react-router'
+import { loginUser, logoutUser, refreshUser, useAuthContext } from '../contexts/UserContext'
 
 type Props = {
-  username: string
+  email: string
   password: string
+  remember: boolean
 }
 
-export default function useUser() {
-  // const { jwt,  setJWT} = useContext(Context)
-  const [state, setState] = useState({ loading: false, error: false })
+const useUser = () => {
+  const history = useHistory()
+  const { state, dispatch } = useAuthContext()
 
-  const login = useCallback(({ username, password }: Props) => {
-    setState({ loading: true, error: false })
-    loginService({ username, password })
-      .then((res) => {
-        if (res.status === 'Ok') {
-          window.sessionStorage.setItem('user', res)
-          setState({ loading: false, error: false })
-        } else {
-          setState({ loading: false, error: true })
-        }
-        // setJWT(jwt)
-      })
-      .catch((err) => {
-        window.sessionStorage.removeItem('user')
-        setState({ loading: false, error: true })
-        console.error(err)
-      })
-    // }, [setJWT])
-  }, [])
-
-  const logout = useCallback(() => {
-    window.sessionStorage.removeItem('user')
-    // setJWT(null)
-    // }, [setJWT])
-  }, [])
-
-  return {
-    // isLogged: Boolean(jwt),
-    isLogged: Boolean(true),
-    isLoginLoading: state.loading,
-    hasLoginError: state.error,
-    login,
-    logout
+  const login = async ({ email, password, remember }: Props) => {
+    console.log(remember)
+    try {
+      const response = await loginUser(dispatch, { email, password })
+      if (!response) return
+      history.push('/home')
+    } catch (error) {
+      console.log(error)
+    }
   }
+  const logout = async () => {
+    const response = await logoutUser(dispatch)
+    history.push('/login')
+    return response
+  }
+
+  const isLogged = () => {
+    const user = sessionStorage.getItem('currentUser')
+    if (user) {
+      refreshUser(dispatch, JSON.parse(user))
+      return true
+    }
+    return false
+  }
+
+  return { state, login, logout, isLogged }
 }
+
+export default useUser

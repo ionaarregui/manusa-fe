@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Modal, Input, Row, Checkbox, Button, Text, Loading, Spacer } from '@nextui-org/react'
+// import useUser from '../../hooks/useUserX'
 import useUser from '../../hooks/useUser'
 
 export default function ModalLogin() {
@@ -11,7 +12,9 @@ export default function ModalLogin() {
   // const [, navigate] = useLocation()
   // const {isLoginLoading, hasLoginError, login, isLogged} = useUser()
   // const { isLoginLoading, hasLoginError, login } = useUser()
-  const { login, isLoginLoading, hasLoginError } = useUser()
+
+  // const { login, isLoginLoading, hasLoginError } = useUser() viejooooou useUserX
+  const { login, state } = useUser()
 
   // useEffect(() => {
   //   if (isLogged) {
@@ -23,8 +26,7 @@ export default function ModalLogin() {
   const handleSubmit = async () => {
     const username: string = nameRef.current.value
     const password: string = passwordRef.current.value
-    const resp = await login({ username, password })
-    console.log(resp)
+    const resp = await login({ email: username, password, remember: true })
   }
 
   const [visible, setVisible] = useState(false)
@@ -55,7 +57,7 @@ export default function ModalLogin() {
             bordered
             fullWidth
             aria-label="name"
-            status={hasLoginError ? 'error' : 'secondary'}
+            status={state.errorMessage ? 'error' : 'secondary'}
             color="secondary"
             size="lg"
             placeholder="Usuario MOGUL"
@@ -66,16 +68,16 @@ export default function ModalLogin() {
             bordered
             fullWidth
             aria-label="pass"
-            status={hasLoginError ? 'error' : 'secondary'}
+            status={state.errorMessage ? 'error' : 'secondary'}
             size="lg"
             placeholder="Password"
             type="password"
             ref={passwordRef}
           />
-          {hasLoginError && (
+          {state.errorMessage && (
             <>
               <Text small color="error" css={{ textAlign: 'center' }}>
-                Email y/o contraseña inválidos
+                {state.errorMessage}
               </Text>
               <Spacer y={1} />
             </>
@@ -92,7 +94,7 @@ export default function ModalLogin() {
             Cerrar
           </Button>
           <Button auto color="secondary" onPress={handleSubmit}>
-            {isLoginLoading ? <Loading type="points" color="currentColor" size="sm" /> : 'Ingresar'}
+            {state.loading ? <Loading type="points" color="currentColor" size="sm" /> : 'Ingresar'}
           </Button>
         </Modal.Footer>
       </Modal>

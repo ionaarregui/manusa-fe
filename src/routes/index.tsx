@@ -8,20 +8,17 @@ import { LoginPage } from '../pages/Login'
 import { Welcome } from '../pages/Welcome'
 
 import routes from './routes'
+import useUser from '../hooks/useUser'
 
+// TODO: redireccionar ruta de juego
 const PrivateRoute = (props: any) => {
   const location = useLocation()
-  // const { authed } = useAuth()
+  const { state, isLogged } = useUser()
 
-  // return false ? (
-  return true ? (
-    // location.pathname === '/' || location.pathname === '/panel' ? (
-    location.pathname === '/' ? (
-      <Redirect to="/panel/novedades" />
-    ) : (
-      <Route {...props} />
-    )
+  return !!(state.user || isLogged()) ? (
+    <Route {...props} />
   ) : (
+    // <Redirect to={location.pathname} />
     <Redirect
       to={{
         pathname: '/login',
@@ -33,17 +30,19 @@ const PrivateRoute = (props: any) => {
 
 const Routes = () => {
   return (
-    <AuthProvider>
-      <Switch>
-        <Route path="/login" component={LoginPage} />
-        {routes.map((props) => (
-          <PrivateRoute {...props} key={props.path as string} />
-        ))}
-        <Route path="/" component={Welcome} />
-        <Route path="*" component={() => <div> Página no encontrada </div>} />
-      </Switch>
-    </AuthProvider>
+    // <AuthProvider>
+    <Switch>
+      <Route path="/login" component={LoginPage} />
+      {routes.map((props) => (
+        <PrivateRoute {...props} key={props.path as string} />
+      ))}
+      <Route path="/" component={Welcome} />
+      <Route path="*" component={() => <div> Página no encontrada </div>} />
+    </Switch>
   )
 }
 
+{
+  /* </AuthProvider> */
+}
 export default Routes
