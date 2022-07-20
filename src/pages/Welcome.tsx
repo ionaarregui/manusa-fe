@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Text } from '@nextui-org/react'
 import styled, { keyframes } from 'styled-components'
+import useUser from '../hooks/useUser'
 
 const zoomInFont = keyframes`
 100% {
@@ -23,8 +24,18 @@ const WrapperPage = styled.div`
 export const Welcome = () => {
   const history = useHistory()
 
+  const { state, isLogged } = useUser()
+
+  const redirect = !!(state.user || isLogged()) ? '/home' : '/login'
+
   useEffect(() => {
-    setTimeout(() => history.push('/login'), 3000)
+    setTimeout(
+      () =>
+        history.push({
+          pathname: redirect
+        }),
+      3000
+    )
   }, [])
 
   return (
