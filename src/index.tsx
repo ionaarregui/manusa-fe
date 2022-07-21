@@ -17,14 +17,10 @@ const darkTheme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    {/* <AuthProvider> */}
-    {/* <BrowserRouter> */}
     <HashRouter>
       <NextUIProvider theme={darkTheme}>
-        {/* <App /> */}
         <Routes />
       </NextUIProvider>
     </HashRouter>
-    {/* </AuthProvider> */}
   </React.StrictMode>
 )

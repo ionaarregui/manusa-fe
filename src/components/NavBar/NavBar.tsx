@@ -13,7 +13,14 @@ const StyledNavBar = styled.div`
   padding: 15px;
 `
 
-export const NavBar = () => {
+const StyledPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+`
+
+export const NavBar = ({ children }) => {
   const { logout, state } = useUser()
 
   const handlerSelect = (e) => {
@@ -21,41 +28,38 @@ export const NavBar = () => {
   }
 
   return (
-    <StyledNavBar>
-      <Text b>MANUSSA</Text>
-      <Dropdown placement="bottom-left">
-        <Dropdown.Trigger>
-          <Avatar
-            bordered
-            zoomed
-            size="lg"
-            as="button"
+    <StyledPage>
+      <StyledNavBar>
+        <Text b>MANUSSA</Text>
+        <Dropdown placement="bottom-left">
+          <Dropdown.Trigger>
+            <Avatar bordered zoomed size="lg" as="button" color="secondary" src={state.user.avatar} />
+          </Dropdown.Trigger>
+          <Dropdown.Menu
             color="secondary"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
-        </Dropdown.Trigger>
-        <Dropdown.Menu
-          color="secondary"
-          aria-label="Avatar Actions"
-          disabledKeys={['profile']}
-          onAction={handlerSelect}
-        >
-          <Dropdown.Item key="profile" css={{ height: '$18' }} textValue="User">
-            <Text color="inherit">
-              {'👑 Mogul '}
-              <Text b color="inherit">
-                {state.user.name}
+            aria-label="Avatar Actions"
+            disabledKeys={['profile']}
+            onAction={handlerSelect}
+          >
+            <Dropdown.Item key="profile" css={{ height: '$18' }} textValue="User">
+              <Text color="inherit">
+                {'👑 Mogul '}
+                <Text b color="inherit">
+                  {state.user.name}
+                </Text>
               </Text>
-            </Text>
-          </Dropdown.Item>
-          <Dropdown.Item key="settings" textValue="Editar">
-            Editar perfil
-          </Dropdown.Item>
-          <Dropdown.Item key="logout" color="error" withDivider textValue="Salir">
-            Salir
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </StyledNavBar>
+            </Dropdown.Item>
+            <Dropdown.Item key="settings" textValue="Editar">
+              Editar perfil
+            </Dropdown.Item>
+            <Dropdown.Item key="logout" color="error" withDivider textValue="Salir">
+              Salir
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </StyledNavBar>
+
+      {children}
+    </StyledPage>
   )
 }

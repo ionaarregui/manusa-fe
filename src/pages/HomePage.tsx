@@ -9,11 +9,8 @@ const StyledHome = styled.div`
 
 export const HomePage = () => {
   return (
-    <div>
-      <NavBar />
-      <StyledHome>
-        <Home />
-      </StyledHome>
-    </div>
+    <NavBar>
+      <Home />
+    </NavBar>
   )
 }

@@ -26,7 +26,7 @@ export default function ModalLogin() {
   const handleSubmit = async () => {
     const username: string = nameRef.current.value
     const password: string = passwordRef.current.value
-    const resp = await login({ email: username, password, remember: true })
+    const resp = await login({ email: username.toLowerCase(), password, remember: true })
   }
 
   const [visible, setVisible] = useState(false)
