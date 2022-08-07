@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, Dropdown, Text } from '@nextui-org/react'
 import styled from 'styled-components'
 import useUser from '../../hooks/useUser'
+import { ModalEditPerfil } from '../Home/ModalEditPerfil'
 
 const StyledNavBar = styled.div`
   background-color: #181818;
@@ -22,10 +23,14 @@ const StyledPage = styled.div`
 
 export const NavBar = ({ children }) => {
   const { logout, state } = useUser()
+  const [openModal, setOpenModal] = useState(false)
 
   const handlerSelect = (e) => {
     if (e === 'logout') logout()
+    if (e === 'settings') setOpenModal(true)
   }
+
+  const handlerCloseModal = () => setOpenModal(false)
 
   return (
     <StyledPage>
@@ -58,7 +63,7 @@ export const NavBar = ({ children }) => {
           </Dropdown.Menu>
         </Dropdown>
       </StyledNavBar>
-
+      {openModal && <ModalEditPerfil show={openModal} closeHandler={handlerCloseModal} />}
       {children}
     </StyledPage>
   )
