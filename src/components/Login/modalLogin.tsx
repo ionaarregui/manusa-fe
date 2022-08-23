@@ -7,26 +7,12 @@ export default function ModalLogin() {
   const nameRef = useRef() as React.MutableRefObject<HTMLInputElement>
   const passwordRef = useRef() as React.MutableRefObject<HTMLInputElement>
 
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [, navigate] = useLocation()
-  // const {isLoginLoading, hasLoginError, login, isLogged} = useUser()
-  // const { isLoginLoading, hasLoginError, login } = useUser()
-
-  // const { login, isLoginLoading, hasLoginError } = useUser() viejooooou useUserX
   const { login, state } = useUser()
-
-  // useEffect(() => {
-  //   if (isLogged) {
-  //     navigate('/')
-  //     onLogin && onLogin()
-  //   }
-  // }, [isLogged, navigate, onLogin])
 
   const handleSubmit = async () => {
     const username: string = nameRef.current.value
     const password: string = passwordRef.current.value
-    const resp = await login({ email: username.toLowerCase(), password, remember: true })
+    const resp = await login({ email: username.toLowerCase(), password })
   }
 
   const [visible, setVisible] = useState(false)
@@ -83,9 +69,6 @@ export default function ModalLogin() {
             </>
           )}
           <Row justify="space-between">
-            <Checkbox onChange={handleRecordar}>
-              <Text size={14}>Recordarme!</Text>
-            </Checkbox>
             <Text size={14}>Olvidaste tú contraseña?</Text>
           </Row>
         </Modal.Body>

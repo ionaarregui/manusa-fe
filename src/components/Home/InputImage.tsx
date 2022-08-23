@@ -23,12 +23,30 @@ const WrapperInput = styled.div`
 //   file: null,
 //   base64URL: ''
 // }
-export const InputImage = ({ actualAvatar, value, onChange }) => {
-  //   const [avatar, setAvatar] = useState(initialstate)
-  const [loading, setLoading] = useState(false)
+export const InputImage = ({ value, onChange }) => {
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [preview, setPreview] = useState(null)
 
-  const [image, setImage] = useState(null)
-  const imgValue = useRef(value)
+  // create a preview as a side effect, whenever selected file is changed
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreview(undefined)
+      return
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile)
+    setPreview(objectUrl)
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl)
+  }, [selectedFile])
+
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length !== 0) {
+      setSelectedFile(e.target.files[0])
+      onChange(e.target.files[0])
+    }
+  }
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -43,29 +61,7 @@ export const InputImage = ({ actualAvatar, value, onChange }) => {
     })
   }
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0]
-    setLoading(true)
-    // const base64 = await convertToBase64(file)
-    // // const base64 = convert(file)
-    // onChange(base64)
-
-    onChange(URL.createObjectURL(e.target.files[0]))
-    // setImage(URL.createObjectURL(e.target.files[0]))
-    setLoading(false)
-
-    // onChange(URL.createObjectURL(e.target.value))
-  }
-
-  const [picture, setPicture] = useState(null)
-
-  const onChangePicture = async (e) => {
-    // setLoading(true)
-    // const res = URL.createObjectURL(e.target.files[0])
-    // await setPicture(res)
-    // setLoading(false)
-  }
-
+  // const base64 = await convertToBase64(file)
 
   return (
     <WrapperInput>
@@ -75,18 +71,19 @@ export const InputImage = ({ actualAvatar, value, onChange }) => {
         color="secondary"
         component="label"
         // startIcon={<Avatar squared src={value} size="lg" />}
-        startIcon={<Avatar squared src={URL.createObjectURL(imgValue?.current?.value) || value} size="lg" />}
+        startIcon={
+          <Avatar
+            squared
+            // src={imgValue?.current?.value ? URL.createObjectURL(imgValue?.current?.value) : value}
+            src={selectedFile ? preview : value}
+            size="lg"
+          />
+        }
       >
-        {loading ? <Loading color="currentColor" size="sm" /> : 'Cambiar avatar mogul'}
-        <input
-          ref={imgValue}
-          hidden
-          accept="image/*"
-          multiple
-          type="file"
-          //   onChange={onChangePicture}
-          //   onChange={(e) => onChange(e.target.value)}
-        />
+        {/* {selectedFile &&  <img src={preview} /> } */}
+        Cambiar avatar mogul
+        {/* {loading ? <Loading color="currentColor" size="sm" /> : 'Cambiar avatar mogul'} */}
+        <input onChange={onSelectFile} hidden accept="image/*" multiple type="file" />
       </Button>
     </WrapperInput>
   )

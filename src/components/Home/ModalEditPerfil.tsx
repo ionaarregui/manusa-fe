@@ -1,19 +1,39 @@
+import React, { useRef, useState } from 'react'
 // import React from 'react'
-import { PhotoCamera } from '@mui/icons-material'
-import { IconButton } from '@mui/material'
 import { Button, Input, Modal, Text } from '@nextui-org/react'
-import { useState } from 'react'
 import useUser from '../../hooks/useUser'
 import { InputImage } from './InputImage'
 
+const validMail = (mail: string) => {
+  const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
+  return emailRegex.test(mail)
+}
+
 export const ModalEditPerfil = ({ show, closeHandler }) => {
-  const { state } = useUser()
+  const { state, editProfile } = useUser()
+  // const [errors, setErrors] = useState({ user: false, email: false, lacajeta: false })
   const [avatar, setAvatar] = useState(state.user?.avatar)
-  const [actualAvatar, setActualAvatar] = useState('')
+  const [userName, setUserName] = useState({ value: state.user?.name, error: false })
+  const [mail, setMail] = useState({ value: state.user?.email, error: false })
+
+  // const [actualAvatar, setActualAvatar] = useState('')
 
   const handlerAvatar = (value) => {
-    console.log('QUE CARAJO LLEGA', value)
-    setActualAvatar(value)
+    // console.log('QUE CARAJO LLEGA', value)
+    setAvatar(value)
+  }
+
+  const handlerSubmit = () => {
+    const isValidUser = userName.value.trim().length > 0
+    const isValidMail = validMail(mail.value)
+
+    if (!isValidMail || !isValidUser) {
+      setUserName({ ...userName, error: !isValidUser })
+      setMail({ ...mail, error: !isValidMail })
+      return
+    }
+
+    editProfile({ user: userName.value, mail: mail.value, avatar })
   }
   //   console.log(state)
 
@@ -28,17 +48,38 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
         </Text>
       </Modal.Header>
       <Modal.Body>
-        <InputImage value={avatar} onChange={handlerAvatar} actualAvatar={actualAvatar} />
-
-        {/* <Input clearable bordered fullWidth color="secondary" size="lg" placeholder="Nombre de usuario" />
-        <Input clearable bordered fullWidth color="secondary" size="lg" placeholder="Código de sala" /> */}
+        <InputImage value={avatar} onChange={handlerAvatar} />
+        <Input
+          clearable
+          bordered
+          fullWidth
+          color="secondary"
+          aria-label="username"
+          status={userName.error ? 'error' : 'secondary'}
+          size="lg"
+          placeholder="Usuario MOGUL"
+          value={userName.value}
+          onChange={(e) => setUserName({ value: e.target.value, error: false })}
+        />
+        <Input
+          clearable
+          bordered
+          fullWidth
+          color="secondary"
+          aria-label="mail"
+          status={mail.error ? 'error' : 'secondary'}
+          size="lg"
+          placeholder="Mail MOGUL"
+          value={mail.value}
+          onChange={(e) => setMail({ value: e.target.value, error: false })}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button auto light color="secondary" onPress={closeHandler}>
-          Cerrar
+          Cancelar
         </Button>
-        <Button auto color="secondary" onPress={closeHandler}>
-          Ingresar
+        <Button auto color="secondary" onPress={handlerSubmit}>
+          Guardar
         </Button>
       </Modal.Footer>
     </Modal>
