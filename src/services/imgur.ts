@@ -42,7 +42,7 @@ export const sendImage = (file) => {
   //     .catch((error) => console.log('error', error))
   var myHeaders = new Headers()
   myHeaders.append('Authorization', 'Client-ID 0afb7e3dcf88a75')
-  myHeaders.append('Content-Type', 'multipart/form-data')
+  myHeaders.append('Content-Type', 'multipart/form-data; boundary=------WebKitFormBoundaryWp4TJWrhcOFdZEw7')
   myHeaders.append('Content-Length', '')
   myHeaders.append('Host', '')
 
@@ -56,7 +56,7 @@ export const sendImage = (file) => {
   }
 
   fetch('https://api.imgur.com/3/image', requestOptions)
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => console.log(result))
     .catch((error) => console.log('error', error))
 }
