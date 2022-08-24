@@ -42,7 +42,7 @@ export const sendImage = (file) => {
   //     .catch((error) => console.log('error', error))
   var myHeaders = new Headers()
   myHeaders.append('Authorization', 'Client-ID 0afb7e3dcf88a75')
-  myHeaders.append('Content-Type', 'multipart/form-data; boundary=------WebKitFormBoundaryWp4TJWrhcOFdZEw7')
+  myHeaders.append('Content-Type', 'multipart/form-data; boundary=Wp4TJWrhcOFdZEw7')
   myHeaders.append('Content-Length', '')
   myHeaders.append('Host', '')
 
