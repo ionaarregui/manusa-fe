@@ -39,13 +39,13 @@ const useUser = () => {
     return false
   }
 
-  const editProfile = async ({ user, mail, avatar, idUser }) => {
+  const editProfile = async ({ user, name, avatar, idUser }) => {
     try {
       const urlAvatar = avatar !== state.user.avatar ? await sendImage(avatar) : avatar
 
       const body = {
         username: user.trim(),
-        email: mail.trim(),
+        name: name.trim(),
         avatar: urlAvatar
       }
 

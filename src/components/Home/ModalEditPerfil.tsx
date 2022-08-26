@@ -13,7 +13,7 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
   const { state, editProfile } = useUser()
   const [avatar, setAvatar] = useState(state.user?.avatar)
   const [userName, setUserName] = useState({ value: state.user?.username, error: false })
-  const [mail, setMail] = useState({ value: state.user?.email, error: false })
+  const [name, setName] = useState({ value: state.user?.name, error: false })
 
   // const [actualAvatar, setActualAvatar] = useState('')
 
@@ -23,15 +23,15 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
 
   const handlerSubmit = async () => {
     const isValidUser = userName.value.trim().length > 0
-    const isValidMail = validMail(mail.value)
+    const isValidName = name.value.trim().length > 0
 
-    if (!isValidMail || !isValidUser) {
+    if (!isValidName || !isValidUser) {
       setUserName({ ...userName, error: !isValidUser })
-      setMail({ ...mail, error: !isValidMail })
+      setName({ ...name, error: !isValidName })
       return
     }
 
-    const edit = await editProfile({ user: userName.value, mail: mail.value, avatar, idUser: state.user?.id })
+    const edit = await editProfile({ user: userName.value, name: name.value, avatar, idUser: state.user?.id })
     if (edit) closeHandler()
   }
 
@@ -64,12 +64,12 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
           bordered
           fullWidth
           color="secondary"
-          aria-label="mail"
-          status={mail.error ? 'error' : 'secondary'}
+          aria-label="name"
+          status={name.error ? 'error' : 'secondary'}
           size="lg"
-          placeholder="Mail MOGUL"
-          value={mail.value}
-          onChange={(e) => setMail({ value: e.target.value, error: false })}
+          placeholder="Nombre"
+          value={name.value}
+          onChange={(e) => setName({ value: e.target.value, error: false })}
         />
       </Modal.Body>
       <Modal.Footer>
