@@ -12,7 +12,7 @@ const validMail = (mail: string) => {
 export const ModalEditPerfil = ({ show, closeHandler }) => {
   const { state, editProfile } = useUser()
   const [avatar, setAvatar] = useState(state.user?.avatar)
-  const [userName, setUserName] = useState({ value: state.user?.name, error: false })
+  const [userName, setUserName] = useState({ value: state.user?.username, error: false })
   const [mail, setMail] = useState({ value: state.user?.email, error: false })
 
   // const [actualAvatar, setActualAvatar] = useState('')
@@ -41,7 +41,7 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
         <Text id="modal-title" size={18}>
           Edit perfil
           <Text b size={18}>
-            Manussa
+            Mogul
           </Text>
         </Text>
       </Modal.Header>
