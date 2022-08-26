@@ -1,8 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import { loginUser, logoutUser, refreshUser, useAuthContext } from '../contexts/UserContext'
+import { editUser } from '../contexts/UserContext/actions'
 // import getToken from '../services/imgur'
 import { sendImage } from '../services/imgur'
+import { editProfileService } from '../services/userService'
 
 type Props = {
   email: string
@@ -37,28 +39,23 @@ const useUser = () => {
     return false
   }
 
-  const editProfile = async ({ user, mail, avatar }) => {
-    const urlAvatar = avatar !== state.user.avatar ? await sendImage(avatar) : avatar
+  const editProfile = async ({ user, mail, avatar, idUser }) => {
+    try {
+      const urlAvatar = avatar !== state.user.avatar ? await sendImage(avatar) : avatar
 
-    const send = {
-      user: user.trim(),
-      mail: mail.trim(),
-      avatar: urlAvatar
+      const body = {
+        username: user.trim(),
+        email: mail.trim(),
+        avatar: urlAvatar
+      }
+
+      const res = await editUser(dispatch, { body, idUser })
+
+      return !res ? false : true
+    } catch (error) {
+      console.log(error)
+      return false
     }
-    console.log({ send })
-  }
-
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(file)
-      fileReader.onload = () => {
-        resolve(fileReader.result)
-      }
-      fileReader.onerror = (error) => {
-        reject(error)
-      }
-    })
   }
 
   return { state, login, logout, isLogged, editProfile }

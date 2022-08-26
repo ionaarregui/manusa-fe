@@ -50,7 +50,7 @@ export const NavBar = ({ children }) => {
               <Text color="inherit">
                 {'👑 Mogul '}
                 <Text b color="inherit">
-                  {state.user.name}
+                  {state.user.username}
                 </Text>
               </Text>
             </Dropdown.Item>

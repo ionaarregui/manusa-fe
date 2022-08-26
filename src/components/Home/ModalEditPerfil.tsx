@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 // import React from 'react'
-import { Button, Input, Modal, Text } from '@nextui-org/react'
+import { Button, Input, Modal, Text, Loading } from '@nextui-org/react'
 import useUser from '../../hooks/useUser'
 import { InputImage } from './InputImage'
 
@@ -11,7 +11,6 @@ const validMail = (mail: string) => {
 
 export const ModalEditPerfil = ({ show, closeHandler }) => {
   const { state, editProfile } = useUser()
-  // const [errors, setErrors] = useState({ user: false, email: false, lacajeta: false })
   const [avatar, setAvatar] = useState(state.user?.avatar)
   const [userName, setUserName] = useState({ value: state.user?.name, error: false })
   const [mail, setMail] = useState({ value: state.user?.email, error: false })
@@ -19,11 +18,10 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
   // const [actualAvatar, setActualAvatar] = useState('')
 
   const handlerAvatar = (value) => {
-    // console.log('QUE CARAJO LLEGA', value)
     setAvatar(value)
   }
 
-  const handlerSubmit = () => {
+  const handlerSubmit = async () => {
     const isValidUser = userName.value.trim().length > 0
     const isValidMail = validMail(mail.value)
 
@@ -33,9 +31,9 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
       return
     }
 
-    editProfile({ user: userName.value, mail: mail.value, avatar })
+    const edit = await editProfile({ user: userName.value, mail: mail.value, avatar, idUser: state.user?.id })
+    if (edit) closeHandler()
   }
-  //   console.log(state)
 
   return (
     <Modal closeButton blur aria-labelledby="modal-title" open={show} onClose={closeHandler}>
@@ -79,7 +77,7 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
           Cancelar
         </Button>
         <Button auto color="secondary" onPress={handlerSubmit}>
-          Guardar
+          {state.loading ? <Loading type="points" color="currentColor" size="sm" /> : 'Guardar'}
         </Button>
       </Modal.Footer>
     </Modal>
