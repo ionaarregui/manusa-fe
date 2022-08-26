@@ -38,17 +38,12 @@ const useUser = () => {
   }
 
   const editProfile = async ({ user, mail, avatar }) => {
-    const changedAvatar = avatar !== state.user.avatar
-    if (changedAvatar) {
-      // const base64 = await convertToBase64(avatar)
-      // console.log(base64)
-      sendImage(avatar)
-    }
-    console.log('aca llego')
+    const urlAvatar = avatar !== state.user.avatar ? await sendImage(avatar) : avatar
+
     const send = {
       user: user.trim(),
       mail: mail.trim(),
-      avatar: changedAvatar ? 'new' : avatar
+      avatar: urlAvatar
     }
     console.log({ send })
   }
