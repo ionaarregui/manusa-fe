@@ -1,5 +1,4 @@
-// const ENDPOINT = 'https://deno-api-users-login.herokuapp.com'
-const ENDPOINT = 'https://manusa-api.herokuapp.com'
+const ENDPOINT = 'https://manusa-be-production.up.railway.app'
 
 type LoginProps = {
   body: {
