@@ -1,7 +1,13 @@
-let user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser') || '').user : ''
+// let user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser') || '').user : ''
+
+const recoverUser = () => {
+  const currentUser = localStorage.getItem('currentUser')
+  console.log('PARA POR ACA ', { currentUser })
+  return currentUser ? JSON.parse(currentUser) : ''
+}
 
 export const initialState = {
-  user: '' || user,
+  user: '' || recoverUser(),
   loading: false,
   errorMessage: null
 }

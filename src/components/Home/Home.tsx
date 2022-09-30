@@ -8,6 +8,11 @@ import Stomp from 'stompjs'
 
 import { over } from 'stompjs'
 import useUser from '../../hooks/useUser'
+import { ModalConfigGame } from './ModalConfigGame'
+import { config } from '../../services/config'
+import { ModalJoinGame } from './ModalJoinGame'
+
+const ENDPOINT = config.api
 
 const StyledButtons = styled.div`
   display: flex;
@@ -73,14 +78,15 @@ export const Home = () => {
   }
 
   function connect() {
-    var socket = new SockJS('https://manusa-api.herokuapp.com/gs-guide-websocket')
+    var socket = new SockJS(`${ENDPOINT}/manusa-game`)
     stompClient = Stomp.over(socket)
+    console.log({ stompClient })
     stompClient.connect(
       {},
       function (frame) {
         setConnected(true)
         console.log('Connected aca: ' + frame)
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/match/start', function (greeting) {
           showGreeting(JSON.parse(greeting.body).content)
         })
       },
@@ -88,8 +94,10 @@ export const Home = () => {
     )
   }
 
-  function sendName() {
-    stompClient.send('/app/hello', {}, JSON.stringify({ name: state.user.name }))
+  async function sendName() {
+    // const response = await stompClient.send('/hello', {})
+    // console.log({ response })
+    stompClient.send('/hello', {}, JSON.stringify({ name: state.user.name }))
     console.log('sendName', { mensajes })
   }
 
@@ -99,6 +107,27 @@ export const Home = () => {
     setMensajes([...mensajes, message])
 
     // console.log('showGreeting', { mensajes })
+  }
+
+  function sendPuebaX() {
+    var socket = new SockJS(`${ENDPOINT}/manusa-game`)
+    stompClient = Stomp.over(socket)
+    stompClient.connect(
+      {},
+      function (frame) {
+        setConnected(true)
+        console.log('Connected aca: ' + frame)
+        stompClient.subscribe('/prueba', function (greeting) {
+          showGreeting(JSON.parse(greeting.body).content)
+        })
+      },
+      onError
+    )
+  }
+
+  function sendPueba() {
+    stompClient.send('/prueba', {}, JSON.stringify({ name: state.user.name }))
+    console.log('sendPreueba', { mensajes })
   }
 
   const conexion = () => {
@@ -119,12 +148,19 @@ export const Home = () => {
       >
         CREAR NUEVA PARTIDA
       </Text>
+      <ModalConfigGame />
       <StyledButtons>
         <Button auto bordered color="gradient" onClick={conexion}>
-          MOGUL
+          CONECTAR
         </Button>
         <Button auto bordered color="gradient" onClick={enviar}>
-          INVITADOS
+          ENVIAR MENSAJE
+        </Button>
+        <Button auto bordered color="gradient" onClick={sendPuebaX}>
+          A /PRUEBA
+        </Button>
+        <Button auto bordered color="gradient" onClick={sendPueba}>
+          mensaje A /PRUEBA
         </Button>
       </StyledButtons>
       <StyledButtons style={{ paddingTop: '130px' }}>
@@ -135,10 +171,10 @@ export const Home = () => {
         >
           UNIRSE A PARTIDA EXISTENTE
         </Text>
-        <Button auto bordered size={'xs'} color="gradient">
-          CON CÓDIGO
-        </Button>
+        <ModalJoinGame />
       </StyledButtons>
     </StyledPage>
   )
 }
+
+// WG691f08

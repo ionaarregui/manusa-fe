@@ -25,7 +25,7 @@ export default function ModalLogin() {
 
   return (
     <div>
-      <Button auto color="gradient" onPress={handlerShow}>
+      <Button auto color="gradient" onClick={handlerShow}>
         Entrar como MOGUL
       </Button>
       <Modal closeButton blur aria-labelledby="modal-title" open={visible} onClose={closeHandler}>
@@ -49,7 +49,7 @@ export default function ModalLogin() {
             placeholder="Usuario MOGUL"
             ref={nameRef}
           />
-          <Input
+          <Input.Password
             clearable
             bordered
             fullWidth
@@ -73,10 +73,10 @@ export default function ModalLogin() {
           </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto light color="secondary" onPress={closeHandler}>
+          <Button auto light color="secondary" onClick={closeHandler}>
             Cerrar
           </Button>
-          <Button auto color="secondary" onPress={handleSubmit}>
+          <Button auto color="secondary" onClick={handleSubmit}>
             {state.loading ? <Loading type="points" color="currentColor" size="sm" /> : 'Ingresar'}
           </Button>
         </Modal.Footer>

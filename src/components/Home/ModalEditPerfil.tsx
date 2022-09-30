@@ -73,10 +73,10 @@ export const ModalEditPerfil = ({ show, closeHandler }) => {
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button auto light color="secondary" onPress={closeHandler}>
+        <Button auto light color="secondary" onClick={closeHandler}>
           Cancelar
         </Button>
-        <Button auto color="secondary" onPress={handlerSubmit}>
+        <Button auto color="secondary" onClick={handlerSubmit}>
           {state.loading ? <Loading type="points" color="currentColor" size="sm" /> : 'Guardar'}
         </Button>
       </Modal.Footer>

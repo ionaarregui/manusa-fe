@@ -4,7 +4,6 @@ import { loginUser, logoutUser, refreshUser, useAuthContext } from '../contexts/
 import { editUser } from '../contexts/UserContext/actions'
 // import getToken from '../services/imgur'
 import { sendImage } from '../services/imgur'
-import { editProfileService } from '../services/userService'
 
 type Props = {
   email: string

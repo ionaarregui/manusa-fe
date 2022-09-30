@@ -1,4 +1,7 @@
-const ENDPOINT = 'https://manusa-be-production.up.railway.app'
+import { config } from './config'
+// const ENDPOINT = 'https://manusa-be-production.up.railway.app'
+
+const ENDPOINT = config.api
 
 type LoginProps = {
   body: {

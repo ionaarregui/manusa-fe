@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { NavBar } from '../components/NavBar/NavBar'
 import { Home } from '../components/Home/Home'

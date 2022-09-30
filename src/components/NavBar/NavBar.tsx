@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Dropdown, Text } from '@nextui-org/react'
+import { Navbar, Avatar, Dropdown, Text } from '@nextui-org/react'
 import styled from 'styled-components'
 import useUser from '../../hooks/useUser'
 import { ModalEditPerfil } from '../Home/ModalEditPerfil'
@@ -33,36 +33,90 @@ export const NavBar = ({ children }) => {
   const handlerCloseModal = () => setOpenModal(false)
 
   return (
+    // <StyledPage>
+    //   <StyledNavBar>
+    //     <Text b>MANUSSA</Text>
+    //     <Dropdown placement="bottom-left">
+    //       <Dropdown.Trigger>
+    //         <Avatar bordered zoomed size="lg" as="button" color="secondary" src={state.user.avatar} />
+    //       </Dropdown.Trigger>
+    //       <Dropdown.Menu
+    //         color="secondary"
+    //         aria-label="Avatar Actions"
+    //         disabledKeys={['profile']}
+    //         onAction={handlerSelect}
+    //       >
+    //         <Dropdown.Item key="profile" css={{ height: '$18' }} textValue="User">
+    //           <Text color="inherit">
+    //             {'👑 Mogul '}
+    //             <Text b color="inherit">
+    //               {state.user.username}
+    //             </Text>
+    //           </Text>
+    //         </Dropdown.Item>
+    //         <Dropdown.Item key="settings" textValue="Editar">
+    //           Editar perfil
+    //         </Dropdown.Item>
+    //         <Dropdown.Item key="logout" color="error" withDivider textValue="Salir">
+    //           Salir
+    //         </Dropdown.Item>
+    //       </Dropdown.Menu>
+    //     </Dropdown>
+    //   </StyledNavBar>
+    //   {openModal && <ModalEditPerfil show={openModal} closeHandler={handlerCloseModal} />}
+    //   {children}
+    // </StyledPage>
+
     <StyledPage>
-      <StyledNavBar>
-        <Text b>MANUSSA</Text>
-        <Dropdown placement="bottom-left">
-          <Dropdown.Trigger>
-            <Avatar bordered zoomed size="lg" as="button" color="secondary" src={state.user.avatar} />
-          </Dropdown.Trigger>
-          <Dropdown.Menu
-            color="secondary"
-            aria-label="Avatar Actions"
-            disabledKeys={['profile']}
-            onAction={handlerSelect}
-          >
-            <Dropdown.Item key="profile" css={{ height: '$18' }} textValue="User">
-              <Text color="inherit">
-                {'👑 Mogul '}
-                <Text b color="inherit">
-                  {state.user.username}
+      <Navbar isBordered variant="floating">
+        <Navbar.Toggle showIn="xs" />
+        <Navbar.Brand
+          css={{
+            '@xs': {
+              w: '12%'
+            }
+          }}
+        >
+          <Text b color="inherit" hideIn="xs">
+            MANUSSA
+          </Text>
+        </Navbar.Brand>
+        <Navbar.Content
+          css={{
+            '@xs': {
+              w: '12%',
+              jc: 'flex-end'
+            }
+          }}
+        >
+          <Dropdown placement="bottom-left">
+            <Dropdown.Trigger>
+              <Avatar bordered zoomed size="lg" as="button" color="secondary" src={state.user.avatar} />
+            </Dropdown.Trigger>
+            <Dropdown.Menu
+              color="secondary"
+              aria-label="Avatar Actions"
+              disabledKeys={['profile']}
+              onAction={handlerSelect}
+            >
+              <Dropdown.Item key="profile" css={{ height: '$18' }} textValue="User">
+                <Text color="inherit">
+                  {'👑 Mogul '}
+                  <Text b color="inherit">
+                    {state.user.username}
+                  </Text>
                 </Text>
-              </Text>
-            </Dropdown.Item>
-            <Dropdown.Item key="settings" textValue="Editar">
-              Editar perfil
-            </Dropdown.Item>
-            <Dropdown.Item key="logout" color="error" withDivider textValue="Salir">
-              Salir
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </StyledNavBar>
+              </Dropdown.Item>
+              <Dropdown.Item key="settings" textValue="Editar">
+                Editar perfil
+              </Dropdown.Item>
+              <Dropdown.Item key="logout" color="error" withDivider textValue="Salir">
+                Salir
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Navbar.Content>
+      </Navbar>
       {openModal && <ModalEditPerfil show={openModal} closeHandler={handlerCloseModal} />}
       {children}
     </StyledPage>

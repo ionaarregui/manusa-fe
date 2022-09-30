@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom'
 
 // import useAuth, { AuthProvider } from '../contexts/UserContext'
@@ -7,11 +7,19 @@ import { AuthProvider } from '../contexts/UserContext'
 import { LoginPage } from '../pages/Login'
 import { Welcome } from '../pages/Welcome'
 
-import routes from './routes'
+// import routes from './routes'
 import useUser from '../hooks/useUser'
+import { GamePage } from '../pages/GamePage'
+import { GameProvider } from '../contexts/GameContext'
+import { HomePage } from '../pages/HomePage'
+import { globalCss } from '@nextui-org/react'
 
-// TODO: redireccionar ruta de juego
-const PrivateRoute = (props: any) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const { state, isLogged } = useUser()
+
+  return <Route {...rest}>{!!(state.user || isLogged()) ? <Component /> : <Redirect to="/login" />}</Route>
+}
+const PrivateRoutes = (props: any) => {
   const location = useLocation()
   const { state, isLogged } = useUser()
 
@@ -28,17 +36,31 @@ const PrivateRoute = (props: any) => {
   )
 }
 
-const Routes = () => {
+const globalStyles = globalCss({
+  body: {
+    backgroundImage: 'url(/image.png)',
+    backgroundSize: 'cover'
+    // backgroundImage: `linear-gradient(to right top, #07041f, #090626, #0a072d, #0a0934, #0a0a3b, #13104a, #1f1359, #2d1568, #491b83, #681e9d, #891eb5, #ad18cd);`
+  }
+})
+
+function Routes(): JSX.Element {
+  globalStyles()
   return (
     <AuthProvider>
-      <Switch>
-        <Route path="/login" exact component={LoginPage} />
-        {routes.map((props) => (
-          <PrivateRoute {...props} key={props.path as string} />
-        ))}
-        <Route path="/" exact component={Welcome} />
-        <Route path="*" exact component={() => <div> Página no encontrada </div>} />
-      </Switch>
+      <GameProvider>
+        <Switch>
+          <Route path="/login" exact component={LoginPage} />
+          {/* {routes.map((props) => (
+            <PrivateRoutes {...props} key={props.path as string} />
+          ))} */}
+          <PrivateRoute path="/home" component={HomePage} />
+          <PrivateRoute path="/game/:id" component={GamePage} />
+
+          <Route path="/" component={Welcome} />
+          <Route path="*" component={() => <div> Página no encontrada </div>} />
+        </Switch>
+      </GameProvider>
     </AuthProvider>
   )
 }

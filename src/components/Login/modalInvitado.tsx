@@ -10,7 +10,7 @@ export default function ModalInvitado() {
   }
   return (
     <>
-      <Button auto bordered color="gradient" onPress={handler}>
+      <Button auto bordered color="gradient" onClick={handler}>
         Entrar como invitado
       </Button>
       <Modal closeButton blur aria-labelledby="modal-title" open={visible} onClose={closeHandler}>
@@ -27,10 +27,10 @@ export default function ModalInvitado() {
           <Input clearable bordered fullWidth color="secondary" size="lg" placeholder="Código de sala" />
         </Modal.Body>
         <Modal.Footer>
-          <Button auto light color="secondary" onPress={closeHandler}>
+          <Button auto light color="secondary" onClick={closeHandler}>
             Cerrar
           </Button>
-          <Button auto color="secondary" onPress={closeHandler}>
+          <Button auto color="secondary" onClick={closeHandler}>
             Ingresar
           </Button>
         </Modal.Footer>

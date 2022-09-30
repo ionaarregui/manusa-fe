@@ -19,6 +19,9 @@ const WrapperPage = styled.div`
     font-size: 50px;
     animation: ${zoomInFont} 3.5s infinite;
   }
+  justify-content: center;
+  align-items: center;
+  background-color: #00000065;
 `
 
 export const Welcome = () => {
