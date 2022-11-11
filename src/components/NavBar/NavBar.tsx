@@ -33,43 +33,8 @@ export const NavBar = ({ children }) => {
   const handlerCloseModal = () => setOpenModal(false)
 
   return (
-    // <StyledPage>
-    //   <StyledNavBar>
-    //     <Text b>MANUSSA</Text>
-    //     <Dropdown placement="bottom-left">
-    //       <Dropdown.Trigger>
-    //         <Avatar bordered zoomed size="lg" as="button" color="secondary" src={state.user.avatar} />
-    //       </Dropdown.Trigger>
-    //       <Dropdown.Menu
-    //         color="secondary"
-    //         aria-label="Avatar Actions"
-    //         disabledKeys={['profile']}
-    //         onAction={handlerSelect}
-    //       >
-    //         <Dropdown.Item key="profile" css={{ height: '$18' }} textValue="User">
-    //           <Text color="inherit">
-    //             {'👑 Mogul '}
-    //             <Text b color="inherit">
-    //               {state.user.username}
-    //             </Text>
-    //           </Text>
-    //         </Dropdown.Item>
-    //         <Dropdown.Item key="settings" textValue="Editar">
-    //           Editar perfil
-    //         </Dropdown.Item>
-    //         <Dropdown.Item key="logout" color="error" withDivider textValue="Salir">
-    //           Salir
-    //         </Dropdown.Item>
-    //       </Dropdown.Menu>
-    //     </Dropdown>
-    //   </StyledNavBar>
-    //   {openModal && <ModalEditPerfil show={openModal} closeHandler={handlerCloseModal} />}
-    //   {children}
-    // </StyledPage>
-
     <StyledPage>
       <Navbar isBordered variant="floating">
-        <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
           css={{
             '@xs': {
@@ -77,7 +42,7 @@ export const NavBar = ({ children }) => {
             }
           }}
         >
-          <Text b color="inherit" hideIn="xs">
+          <Text b color="inherit">
             MANUSSA
           </Text>
         </Navbar.Brand>
