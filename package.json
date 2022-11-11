@@ -17,6 +17,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.1.3",
     "net": "^1.0.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -31,6 +32,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "eslint:disable": "REACT_APP_DEV_DISABLE_ESLINT=true",
+    "start:li": "npm run eslint:disable  react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
