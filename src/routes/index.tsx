@@ -13,10 +13,12 @@ import { GamePage } from '../pages/GamePage'
 import { GameProvider } from '../contexts/GameContext'
 import { HomePage } from '../pages/HomePage'
 import { globalCss } from '@nextui-org/react'
+import { Pruebas } from '../pages/Pruebas'
+import PanelPage from '../pages/PanelPage'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { state, isLogged } = useUser()
-
+  // return <Redirect to="juego" />
   return <Route {...rest}>{!!(state.user || isLogged()) ? <Component /> : <Redirect to="/login" />}</Route>
 }
 const PrivateRoutes = (props: any) => {
@@ -51,11 +53,15 @@ function Routes(): JSX.Element {
       <GameProvider>
         <Switch>
           <Route path="/login" exact component={LoginPage} />
+          <Route path="/juego" exact component={GamePage} />
+
           {/* {routes.map((props) => (
             <PrivateRoutes {...props} key={props.path as string} />
           ))} */}
           <PrivateRoute path="/home" component={HomePage} />
           <PrivateRoute path="/game/:id" component={GamePage} />
+          <PrivateRoute path="/start/:id" component={PanelPage} />
+          <PrivateRoute path="/pruebas" component={Pruebas} />
 
           <Route path="/" component={Welcome} />
           <Route path="*" component={() => <div> Página no encontrada </div>} />
