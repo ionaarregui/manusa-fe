@@ -12,8 +12,6 @@ import { ModalConfigGame } from './ModalConfigGame'
 import { config } from '../../services/config'
 import { ModalJoinGame } from './ModalJoinGame'
 
-const ENDPOINT = config.api
-
 const StyledButtons = styled.div`
   display: flex;
   gap: 1rem;
@@ -30,114 +28,7 @@ const StyledPage = styled.div`
   gap: 10px;
 `
 
-// const App = () => {
-//   const [username, setUsername] = useState("");
-//   const [user, setUser] = useState("");
-
-//   useEffect(() => {
-//     socket?.emit("newUser", user);
-//   }, [socket, user]);
-// }
-
-var stompClient = null
-
 export const Home = () => {
-  const { state } = useUser()
-
-  const [connected, setConnected] = useState(false)
-
-  const [userData, setUserData] = useState({
-    username: '',
-    receivername: '',
-    connected: false,
-    message: ''
-  })
-
-  const [mensajes, setMensajes] = useState([])
-
-  // useEffect(() => {
-  //   console.log(userData)
-  // }, [userData])
-
-  // const connect = () => {
-  //   let Sock = new SockJS('https://manusa-api.herokuapp.com/gs-guide-websocket')
-  //   stompClient = over(Sock)
-  //   stompClient.connect({}, onConnected, onError)
-  // }
-
-  const onConnected = () => {
-    setUserData({ ...userData, connected: true })
-  }
-
-  const onError = (err) => {
-    console.error(err)
-  }
-
-  const handlerButton = () => {
-    // console.log(socket)
-  }
-
-  function connect() {
-    var socket = new SockJS(`${ENDPOINT}/manusa-game`)
-    stompClient = Stomp.over(socket)
-    console.log({ stompClient })
-    stompClient.connect(
-      {},
-      function (frame) {
-        setConnected(true)
-        console.log('Connected aca: ' + frame)
-        stompClient.subscribe('/match/start', function (greeting) {
-          showGreeting(JSON.parse(greeting.body).content)
-        })
-      },
-      onError
-    )
-  }
-
-  async function sendName() {
-    // const response = await stompClient.send('/hello', {})
-    // console.log({ response })
-    stompClient.send('/hello', {}, JSON.stringify({ name: state.user.name }))
-    console.log('sendName', { mensajes })
-  }
-
-  function showGreeting(message) {
-    console.log({ message })
-
-    setMensajes([...mensajes, message])
-
-    // console.log('showGreeting', { mensajes })
-  }
-
-  function sendPuebaX() {
-    var socket = new SockJS(`${ENDPOINT}/manusa-game`)
-    stompClient = Stomp.over(socket)
-    stompClient.connect(
-      {},
-      function (frame) {
-        setConnected(true)
-        console.log('Connected aca: ' + frame)
-        stompClient.subscribe('/prueba', function (greeting) {
-          showGreeting(JSON.parse(greeting.body).content)
-        })
-      },
-      onError
-    )
-  }
-
-  function sendPueba() {
-    stompClient.send('/prueba', {}, JSON.stringify({ name: state.user.name }))
-    console.log('sendPreueba', { mensajes })
-  }
-
-  const conexion = () => {
-    connect()
-  }
-
-  const enviar = () => {
-    sendName()
-  }
-
   return (
     <StyledPage>
       <Text
@@ -146,23 +37,9 @@ export const Home = () => {
           textGradient: '45deg, $blue600 -20%, $pink600 50%'
         }}
       >
-        CREAR NUEVA PARTIDA
+        COMENZAR A JUGAR
       </Text>
       <ModalConfigGame />
-      <StyledButtons>
-        <Button auto bordered color="gradient" onClick={conexion}>
-          CONECTAR
-        </Button>
-        <Button auto bordered color="gradient" onClick={enviar}>
-          ENVIAR MENSAJE
-        </Button>
-        <Button auto bordered color="gradient" onClick={sendPuebaX}>
-          A /PRUEBA
-        </Button>
-        <Button auto bordered color="gradient" onClick={sendPueba}>
-          mensaje A /PRUEBA
-        </Button>
-      </StyledButtons>
       <StyledButtons style={{ paddingTop: '130px' }}>
         <Text
           css={{
