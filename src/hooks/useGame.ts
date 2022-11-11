@@ -37,5 +37,10 @@ export const useGame = () => {
     history.push('/game/' + codeGame)
   }
 
-  return { state, createGameAndConecct, isCurrentGame, cancelGame, joinGame }
+  const startGame = (codeGame: string) => {
+    console.log('Iniciar Partida: ', codeGame)
+    history.push('/start/' + codeGame)
+  }
+
+  return { state, createGameAndConecct, isCurrentGame, cancelGame, joinGame, startGame }
 }

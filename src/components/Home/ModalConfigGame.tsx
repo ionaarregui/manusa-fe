@@ -22,7 +22,7 @@ export const ModalConfigGame = () => {
 
   return (
     <>
-      <Button auto color="gradient" onClick={handlerShow}>
+      <Button auto bordered color="gradient" onClick={handlerShow}>
         CREAR PARTIDA
       </Button>
       <Modal closeButton blur aria-labelledby="modal-title" open={visible} onClose={closeHandler}>

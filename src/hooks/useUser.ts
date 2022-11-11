@@ -18,7 +18,7 @@ const useUser = () => {
     try {
       const response = await loginUser(dispatch, { email, password })
       if (!response) return
-      history.push('/home')
+      history.push('/juego')
     } catch (error) {
       console.log(error)
     }
