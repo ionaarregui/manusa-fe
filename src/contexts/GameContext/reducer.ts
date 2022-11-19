@@ -23,6 +23,7 @@ export const GameReducer = (initialState: any, action: any) => {
       return {
         ...initialState,
         currentGame: action.payload,
+        currentGameCreator: true,
         loading: false
       }
     case 'RECOVER_GAME':

@@ -7,8 +7,7 @@ export async function createGame(dispatch: any, gamePayload: { cantPlayers: stri
     console.log(data)
     if (data.active) {
       dispatch({ type: 'CREATE_GAME', payload: data.codigo })
-      sessionStorage.setItem('currentGame', JSON.stringify(data.codigo))
-
+      sessionStorage.setItem('currentGameCreator', JSON.stringify(data.codigo))
       return data.codigo
     }
     dispatch({ type: 'GAME_ERROR', error: data.data })

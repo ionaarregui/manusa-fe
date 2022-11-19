@@ -124,7 +124,7 @@ export const Pruebas = () => {
 
   return (
     <StyledPage>
-      {connected && <div>Conectado!</div>}
+      {connected && <div>Conectad!</div>}
       <StyledButtons>
         <Button auto bordered color="gradient" onClick={conexion}>
           CONECTAR

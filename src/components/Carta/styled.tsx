@@ -43,11 +43,23 @@ const positionsX = {
   O12: -33
 }
 
-export const WrapperCarta = styled.div<{ value: string }>`
+export const WrapperCarta = styled.div<{ value: string; active: boolean }>`
   background-image: url(https://cdn2.cloudymedia.com/img/sprites/cartas-nuevas.jpg?v=101);
+  background-position-x: ${({ value }) => `${positionsX[value] * 83}px`};
+  min-width: 83px;
   width: 83px;
+  min-height: 124px;
   height: 124px;
   border: solid 1px grey;
   border-radius: 6px;
-  background-position-x: ${({ value }) => `${positionsX[value] * 83}px`};
+  ${({ active }) =>
+    active &&
+    `transform: scale(1.2);
+    box-shadow: 5px 4px 14px 1px rgba(38, 38, 38, 1); `}
+
+  &:hover {
+    transform: scale(1.2);
+    box-shadow: 5px 4px 14px 1px rgba(38, 38, 38, 1);
+    z-index: 500;
+  }
 `

@@ -15,7 +15,12 @@ import { HomePage } from '../pages/HomePage'
 import { globalCss } from '@nextui-org/react'
 import { Pruebas } from '../pages/Pruebas'
 import PanelPage from '../pages/PanelPage'
+import { StompSessionProvider, useSubscription, useStompClient } from 'react-stomp-hooks'
 
+import { config } from '../services/config'
+import { SocketProvider } from '../contexts/SockContext/context'
+
+const ENDPOINT = config.api
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { state, isLogged } = useUser()
   // return <Redirect to="juego" />
@@ -58,9 +63,20 @@ function Routes(): JSX.Element {
           {/* {routes.map((props) => (
             <PrivateRoutes {...props} key={props.path as string} />
           ))} */}
+
           <PrivateRoute path="/home" component={HomePage} />
-          <PrivateRoute path="/game/:id" component={GamePage} />
-          <PrivateRoute path="/start/:id" component={PanelPage} />
+          <SocketProvider>
+            {/* <StompSessionProvider
+            brokerURL={`${ENDPOINT}/manusa-game`}
+            url={`${ENDPOINT}/manusa-game`}
+            debug={(STOMP) => console.log({ STOMP })}
+            onConnect={() => console.log({ STOMP_CONNECT: 'TCP connection successfully established' })}
+          > */}
+
+            <PrivateRoute path="/game/:id" component={GamePage} />
+            <PrivateRoute path="/start/:id" component={PanelPage} />
+          </SocketProvider>
+          {/* </StompSessionProvider> */}
           <PrivateRoute path="/pruebas" component={Pruebas} />
 
           <Route path="/" component={Welcome} />

@@ -1,8 +1,12 @@
 import React from 'react'
 import { WrapperCarta } from './styled'
 
-const Carta = ({ valueCard }: { valueCard: string }) => {
-  return <WrapperCarta value={valueCard} />
+type Props = { valueCard: string; onClick: (x) => void; isActive: boolean }
+
+const Carta = ({ valueCard, onClick, isActive }: Props) => {
+  const handlerClick = () => onClick(valueCard)
+
+  return <WrapperCarta value={valueCard} onClick={handlerClick} active={isActive} />
 }
 
 export default Carta
