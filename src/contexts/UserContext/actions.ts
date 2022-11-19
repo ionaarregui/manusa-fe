@@ -20,7 +20,8 @@ export async function loginUser(dispatch: any, loginPayload: any) {
 
 export async function logoutUser(dispatch: any) {
   dispatch({ type: 'LOGOUT' })
-  sessionStorage.removeItem('currentUser')
+  sessionStorage.clear()
+  // sessionStorage.removeItem('currentUser')
   return true
 }
 

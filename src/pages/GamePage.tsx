@@ -28,8 +28,8 @@ export const GamePage = () => {
   const [mensajes, setMensajes] = useState([])
 
   useEffect(() => {
-    // isCurrentGame()
-    if (socket.connected) {
+    isCurrentGame()
+    if (socket?.connected) {
       if (state.currentGameCreator) {
         socket.subscribe('/match/start', () => {
           setIniciar(true)
@@ -41,10 +41,10 @@ export const GamePage = () => {
       })
       socket.send('/connect', {}, JSON.stringify({ ...user }))
     }
-  }, [])
+  }, [socket])
 
   const handlerStartGame = () => {
-    socket.send('/hello', {}, JSON.stringify({ name: 'admin' }))
+    console.log({ state })
     // startGame(state.currentGame)
     // console.log('MESSAGE SEND')
     // console.log(stompClient)

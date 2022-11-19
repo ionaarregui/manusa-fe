@@ -30,7 +30,8 @@ export const GameReducer = (initialState: any, action: any) => {
     case 'RECOVER_GAME':
       return {
         ...initialState,
-        currentGame: action.payload,
+        currentGame: action.payload.game.code,
+        currentGameCreator: action.payload.game.isCreator,
         loading: false
       }
     case 'CLOSE_GAME':

@@ -15,9 +15,10 @@ export const useGame = () => {
   }
 
   const isCurrentGame = () => {
-    const game = sessionStorage.getItem('currentGame')
+    const game = JSON.parse(sessionStorage.getItem('currentGame'))
+    const gameCreator = JSON.parse(sessionStorage.getItem('currentGameCreator'))
     if (game) {
-      recoverGame(dispatch, JSON.parse(game))
+      recoverGame(dispatch, { code: game, isCreator: gameCreator === game })
       return true
     }
 
@@ -34,7 +35,7 @@ export const useGame = () => {
   // accion mookeada
   const joinGame = (codeGame: string) => {
     sessionStorage.setItem('currentGame', JSON.stringify(codeGame))
-    recoverGame(dispatch, codeGame)
+    recoverGame(dispatch, { code: codeGame, isCreator: false })
     history.push('/game/' + codeGame)
   }
 

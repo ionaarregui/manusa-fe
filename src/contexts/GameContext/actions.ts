@@ -7,6 +7,7 @@ export async function createGame(dispatch: any, gamePayload: { cantPlayers: stri
     console.log(data)
     if (data.active) {
       dispatch({ type: 'CREATE_GAME', payload: data.codigo })
+      sessionStorage.setItem('currentGame', JSON.stringify(data.codigo))
       sessionStorage.setItem('currentGameCreator', JSON.stringify(data.codigo))
       return data.codigo
     }
@@ -18,9 +19,9 @@ export async function createGame(dispatch: any, gamePayload: { cantPlayers: stri
   }
 }
 
-export async function recoverGame(dispatch: any, game: any) {
+export async function recoverGame(dispatch: any, game: { code: string; isCreator: boolean }) {
   dispatch({ type: 'REQUEST_GAME' })
-  dispatch({ type: 'RECOVER_GAME', payload: game })
+  dispatch({ type: 'RECOVER_GAME', payload: { game } })
 }
 
 export async function closeGame(dispatch: any) {
