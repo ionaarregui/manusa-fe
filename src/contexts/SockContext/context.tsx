@@ -14,28 +14,33 @@ interface ISocketProvider {
 }
 
 export const SocketProvider = (props: ISocketProvider) => {
-  const [ws, setWs] = useState(null)
+  const [status, setStatus] = useState(false)
+  const ws = Stomp.over(webSocket)
 
-  useEffect(() => {
-    setWs(Stomp.over(webSocket))
-  }, [])
+  // useEffect(() => {
+  //   setWs(Stomp.over(webSocket))
+  // }, [])
+  const cambiarStatus = (val) => setStatus(val)
 
-  useEffect(() => {
-    if (ws)
-      ws.connect(
-        {},
-        (frame) => {
-          console.log('Conectado: ' + frame)
-          // stompClient.subscribe('/match/start', function (greeting) {
-          //   showGreeting(JSON.parse(greeting.body).content)
-          // })
-        },
-        (err) => {
-          console.error(err)
-        }
-        /// esto es desconeccion
-      )
-  }, [ws])
+  // useEffect(() => {
+  //   console.log('NO TIENE QUE PASAR POR ACA CONTEXT CONEXION: ', ws)
+  //   // if (ws)
+  //   ws.connect(
+  //     {},
+  //     (frame) => {
+  //       console.log('Conectado: ' + frame)
+  //       setStatus(true)
+  //       // stompClient.subscribe('/match/start', function (greeting) {
+  //       //   showGreeting(JSON.parse(greeting.body).content)
+  //       // })
+  //     },
+  //     (err) => {
+  //       console.error(err)
+  //       setStatus(false)
+  //     }
+  //     /// esto es desconeccion
+  //   )
+  // }, [])
 
-  return <SocketContext.Provider value={ws}>{props.children}</SocketContext.Provider>
+  return <SocketContext.Provider value={{ ws, status, cambiarStatus }}>{props.children}</SocketContext.Provider>
 }

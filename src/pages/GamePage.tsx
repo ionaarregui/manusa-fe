@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Card, Container, Grid, Loading, Row } from '@nextui-org/react'
+import { Button, Card, Container, Grid, Loading, Row, Avatar } from '@nextui-org/react'
 import { useGame } from '../hooks/useGame'
 import ChatMessages from '../components/ChatMessages/ChatMessages'
 import ListConnected from '../components/ListConnected/ListConnected'
@@ -9,11 +9,10 @@ import { config } from '../services/config'
 import { useSocket } from '../contexts/SockContext/useSock'
 import useUser from '../hooks/useUser'
 
-const ENDPOINT = config.api
+// const ENDPOINT = config.api
 
 export const GamePage = () => {
-  const socket = useSocket()
-  console.log(socket)
+  const { socket, status: statusSocket, conectar } = useSocket()
 
   const [iniciar, setIniciar] = useState(false)
 
@@ -28,20 +27,29 @@ export const GamePage = () => {
   const [mensajes, setMensajes] = useState([])
 
   useEffect(() => {
+    conectar()
+  }, [])
+
+  useEffect(() => {
     isCurrentGame()
-    if (socket?.connected) {
+    // console.log('ESTA PASANDO POR ACA', { socket, statusSocket })
+    if (statusSocket) {
       if (state.currentGameCreator) {
         socket.subscribe('/match/start', () => {
           setIniciar(true)
         })
-        socket.send('/start', {}, JSON.stringify({ code: state.currentGame }))
+        socket.send('/start', {}, JSON.stringify({ codigo: state.currentGame }))
       }
       socket.subscribe('/match/connect', (j) => {
         setJugadores([...jugadores, j])
       })
-      socket.send('/connect', {}, JSON.stringify({ ...user }))
+      socket.send(
+        '/connect',
+        {},
+        JSON.stringify({ codigo: state.currentGame, userName: user.username, avatar: user.avatar, isMogul: true })
+      )
     }
-  }, [socket])
+  }, [statusSocket])
 
   const handlerStartGame = () => {
     console.log({ state })
