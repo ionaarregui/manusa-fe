@@ -64,21 +64,22 @@ function Routes(): JSX.Element {
           ))} */}
 
           <PrivateRoute path="/home" component={HomePage} />
-          <SocketProvider>
-            {/* <StompSessionProvider
+          {/* <StompSessionProvider
             brokerURL={`${ENDPOINT}/manusa-game`}
             url={`${ENDPOINT}/manusa-game`}
             debug={(STOMP) => console.log({ STOMP })}
             onConnect={() => console.log({ STOMP_CONNECT: 'TCP connection successfully established' })}
           > */}
 
-            <PrivateRoute path="/game/:id" component={GamePage} />
-            <PrivateRoute path="/start/:id" component={PanelPage} />
-          </SocketProvider>
+          {/* <SocketProvider> */}
+          <PrivateRoute path="/game/:id" component={GamePage} />
+          <PrivateRoute path="/start/:id" component={PanelPage} />
+          {/* </SocketProvider> */}
           {/* </StompSessionProvider> */}
-          <PrivateRoute path="/pruebas" component={Pruebas} />
 
+          <PrivateRoute path="/pruebas" component={Pruebas} />
           <Route path="/" component={Welcome} />
+
           <Route path="*" component={() => <div> Página no encontrada </div>} />
         </Switch>
       </GameProvider>

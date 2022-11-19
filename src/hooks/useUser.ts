@@ -17,11 +17,12 @@ const useUser = () => {
   const login = async ({ email, password }: Props) => {
     try {
       const response = await loginUser(dispatch, { email, password })
-      if (!response) return
-      history.push('/juego')
+      console.log('NO HAY RESPONSE')
+      if (!response) return history.push('/juego')
     } catch (error) {
       console.log(error)
     }
+    return history.push('/home')
   }
   const logout = async () => {
     const response = await logoutUser(dispatch)

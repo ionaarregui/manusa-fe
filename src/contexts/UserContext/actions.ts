@@ -4,6 +4,7 @@ export async function loginUser(dispatch: any, loginPayload: any) {
   try {
     dispatch({ type: 'REQUEST_LOGIN' })
     const data = await loginService({ body: loginPayload })
+    console.log({ data })
 
     if (data.status === 'Ok') {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data.data })

@@ -5,6 +5,7 @@ export const useSocket = () => {
   const { ws: socket, status, cambiarStatus } = useContext(SocketContext)
 
   const conectar = () => {
+    console.log('ESTA CONECTANDO', socket)
     socket.connect(
       {},
       (frame) => {
