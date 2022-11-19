@@ -15,7 +15,6 @@ import { HomePage } from '../pages/HomePage'
 import { globalCss } from '@nextui-org/react'
 import { Pruebas } from '../pages/Pruebas'
 import PanelPage from '../pages/PanelPage'
-import { StompSessionProvider, useSubscription, useStompClient } from 'react-stomp-hooks'
 
 import { config } from '../services/config'
 import { SocketProvider } from '../contexts/SockContext/context'

@@ -20,6 +20,7 @@ export const useGame = () => {
       recoverGame(dispatch, JSON.parse(game))
       return true
     }
+
     history.push('/home')
     return false
   }

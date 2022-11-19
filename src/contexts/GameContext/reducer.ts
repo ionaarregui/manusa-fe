@@ -9,6 +9,7 @@ const recoverGame = () => {
 export const initialState = {
   currentGame: recoverGame(),
   loading: false,
+  currentGameCreator: false,
   errorMessage: null
 }
 

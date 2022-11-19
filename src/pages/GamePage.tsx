@@ -5,9 +5,9 @@ import ChatMessages from '../components/ChatMessages/ChatMessages'
 import ListConnected from '../components/ListConnected/ListConnected'
 import { StyledPage } from './Styles'
 import CardCode from '../components/CardCode/CardCode'
-import { StompSessionProvider, useSubscription, useStompClient } from 'react-stomp-hooks'
 import { config } from '../services/config'
 import { useSocket } from '../contexts/SockContext/useSock'
+import useUser from '../hooks/useUser'
 
 const ENDPOINT = config.api
 
@@ -15,19 +15,33 @@ export const GamePage = () => {
   const socket = useSocket()
   console.log(socket)
 
+  const [iniciar, setIniciar] = useState(false)
+
+  const [jugadores, setJugadores] = useState([])
+
   // const stompClient = useStompClient()
+  const {
+    state: { user }
+  } = useUser()
   const { state, isCurrentGame, cancelGame, startGame } = useGame()
 
   const [mensajes, setMensajes] = useState([])
 
   useEffect(() => {
-    isCurrentGame()
+    // isCurrentGame()
+    if (socket.connected) {
+      if (state.currentGameCreator) {
+        socket.subscribe('/match/start', () => {
+          setIniciar(true)
+        })
+        socket.send('/start', {}, JSON.stringify({ code: state.currentGame }))
+      }
+      socket.subscribe('/match/connect', (j) => {
+        setJugadores([...jugadores, j])
+      })
+      socket.send('/connect', {}, JSON.stringify({ ...user }))
+    }
   }, [])
-
-  // useSubscription('/match/start', (message) => {
-  //   console.log(message)
-  //   setLastMessage(message.body)
-  // })
 
   const handlerStartGame = () => {
     socket.send('/hello', {}, JSON.stringify({ name: 'admin' }))
@@ -41,6 +55,8 @@ export const GamePage = () => {
   }
 
   const handlerConnect = () => {
+    // /match/connect
+    // /connect
     socket.subscribe('/match/start', function (greeting) {
       showGreeting(JSON.parse(greeting.body).content)
     })
